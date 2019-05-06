@@ -17,4 +17,4 @@ palindrome.exe: palindrome.cpp
 	$(CPP) $(CPPFLAGS) -o palindrome.exe palindrome.cpp
 
 clean:
-	$(RM) palindrome.exe
+	$(RM) $(PROGS)
