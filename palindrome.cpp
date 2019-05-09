@@ -19,16 +19,20 @@ int main() {
     // Read string input
     std::getline(std::cin, palindrome);
 
-    // Remove symbols and change to lowercase
-    palindrome.erase(
-        std::remove_if(palindrome.begin(), palindrome.end(), ::issymbol),
-        palindrome.end());
-
-    // Iterate through first half of palindrome
-    for (int i = 0; i < palindrome.length() / 2; i++) {
+    // Only iterate through alphanumeric characters of palindrome
+    int i = 0, j = palindrome.size() - 1;
+    while (i < j) {
+        // Skip symbol characters
+        while (::issymbol(palindrome[i]) || ::issymbol(palindrome[j])) {
+            if(::issymbol(palindrome[i])) {
+                ++i;
+            }
+            if(::issymbol(palindrome[j])) {
+                --j;
+            }
+        }
         // Compare lowercase first half to lowercase second half
-        if (tolower(palindrome[i]) !=
-            tolower(palindrome[palindrome.length() - i - 1])) {
+        if (tolower(palindrome[i++]) != tolower(palindrome[j--])) {
             std::cout << "It's not a palindrome!" << std::endl;
 
             // Exit early if not a palindrome
@@ -36,7 +40,11 @@ int main() {
         }
     }
 
-    std::cout << "It's a palindrome!" << std::endl;
+    if (palindrome.size()) {
+        std::cout << "It's a palindrome!" << std::endl;
+    } else {
+        std::cout << "Empty input" << std::endl;
+    }
 
     return 0;
 }
